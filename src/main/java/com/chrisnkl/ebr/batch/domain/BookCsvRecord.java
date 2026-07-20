@@ -1,11 +1,5 @@
 package com.chrisnkl.ebr.batch.domain;
 
-import lombok.*;
-
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
-@Builder
-@ToString
 public record BookCsvRecord(
 
         String isbn,
