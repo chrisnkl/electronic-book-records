@@ -1,16 +1,15 @@
 package com.chrisnkl.ebr.book.exception;
 
-import lombok.Getter;
+import com.chrisnkl.ebr.common.exception.BackendException;
+import org.springframework.http.HttpStatus;
 
-@Getter
-public class AuthorCreationFailureException extends RuntimeException {
+public class AuthorCreationFailureException extends BackendException {
 
-    public AuthorCreationFailureException(String message) {
-        super(message);
+    public AuthorCreationFailureException(String message, HttpStatus status) {
+        super(message, status);
     }
 
-    public AuthorCreationFailureException(String message, Throwable cause) {
-        super(message, cause);
+    public AuthorCreationFailureException(String message, Throwable cause, HttpStatus status) {
+        super(message, cause, status);
     }
-
 }

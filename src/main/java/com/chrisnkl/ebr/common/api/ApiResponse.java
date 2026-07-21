@@ -32,4 +32,8 @@ public record ApiResponse<T>(
     public static ApiResponse<?> notFound(String message) {
         return new ApiResponse<>(HttpStatus.NOT_FOUND.value(), message, Instant.now(), null);
     }
+
+    public static ApiResponse<?> ofStatus(HttpStatus status, String message) {
+        return new ApiResponse<>(status.value(), message, Instant.now(), null);
+    }
 }

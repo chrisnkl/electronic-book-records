@@ -38,6 +38,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(404).body(ApiResponse.notFound("Resource not found: " + e.getMessage()));
     }
 
+    @ExceptionHandler(BackendException.class)
+    public ResponseEntity<ApiResponse<?>> handleBackendException(BackendException e) {
+        log.error("An unexpected backend exception occurred.", e);
+        return ResponseEntity.status(e.getStatus()).body(ApiResponse.ofStatus(e.getStatus(), "An unexpected backend exception occurred: " + e.getMessage()));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<?>> handleGenericException(Exception e) {
         log.error("An unexpected error occurred.", e);

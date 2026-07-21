@@ -1,9 +1,9 @@
 package com.chrisnkl.ebr.book.exception;
 
-import lombok.Getter;
+import com.chrisnkl.ebr.common.exception.BackendException;
 
-@Getter
-public class CategoryCreationFailureException extends RuntimeException {
+
+public class CategoryCreationFailureException extends BackendException {
 
     public CategoryCreationFailureException(String message) {
         super(message);
