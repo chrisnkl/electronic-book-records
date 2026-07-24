@@ -13,6 +13,8 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Stream;
+
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -27,17 +29,56 @@ public class BookItemProcessor implements ItemProcessor<BookCsvRecord, Book> {
 
         log.debug("Processing record: {}", item);
 
-        Author author = authorService.findOrCreate(item.author());
-        Category category = categoryService.findOrCreate(item.category());
+        if (isEmptyRow(item)) {
+            log.warn("Skipping empty CSV row");
+            return null;
+        }
+
+        if (!validate(item)) {
+            log.warn("Failed validate a book csv record, skipping..");
+            return null;
+        }
+
+        Author author = authorService.findOrCreate(item.getAuthor());
+        Category category = categoryService.findOrCreate(item.getCategory());
 
         return Book.builder()
-                .isbn(item.isbn().trim())
-                .title(item.title().trim())
+                .isbn(item.getIsbn().trim())
+                .title(item.getTitle().trim())
                 .author(author)
                 .category(category)
-                .publisher(item.publisher().trim())
-                .publicationYear(item.publicationYear())
-                .description(item.description())
+                .publisher(item.getPublisher().trim())
+                .publicationYear(item.getPublicationYear())
+                .description(item.getDescription())
                 .build();
     }
+
+    private boolean isEmptyRow(BookCsvRecord item) {
+
+        return Stream.of(
+                item.getIsbn(),
+                item.getTitle(),
+                item.getAuthor(),
+                item.getCategory(),
+                item.getPublisher(),
+                item.getDescription()
+        ).allMatch(value -> value == null || value.isBlank());
+    }
+
+    private boolean validate(BookCsvRecord item) {
+
+        if (item.getTitle() == null || item.getTitle().isBlank()) {
+            throw new IllegalArgumentException("Book title is missing");
+        }
+
+        if (item.getAuthor() == null || item.getAuthor().isBlank()) {
+            throw new IllegalArgumentException("Author is missing");
+        }
+
+        if (item.getPublicationYear() == null) {
+            throw new IllegalArgumentException("Publication year is missing");
+        }
+        return true;
+    }
+
 }

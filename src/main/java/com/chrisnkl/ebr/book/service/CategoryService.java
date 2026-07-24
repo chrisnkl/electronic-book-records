@@ -5,6 +5,7 @@ import com.chrisnkl.ebr.book.exception.CategoryCreationFailureException;
 import com.chrisnkl.ebr.book.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,7 +31,7 @@ public class CategoryService {
                     );
         } catch (Exception e) {
             log.error("Error occurred while creating category: {}", name);
-            throw new CategoryCreationFailureException("Failed to create category: " + name, e);
+            throw new CategoryCreationFailureException("Failed to create category: " + name, e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

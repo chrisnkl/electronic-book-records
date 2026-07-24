@@ -5,6 +5,7 @@ import com.chrisnkl.ebr.book.exception.AuthorCreationFailureException;
 import com.chrisnkl.ebr.book.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,7 +31,7 @@ public class AuthorService {
                     );
         } catch (Exception e) {
             log.error("Error occurred while creating author: {}", name);
-            throw new AuthorCreationFailureException("Failed to create author: " + name, e);
+            throw new AuthorCreationFailureException("Failed to create author: " + name, e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

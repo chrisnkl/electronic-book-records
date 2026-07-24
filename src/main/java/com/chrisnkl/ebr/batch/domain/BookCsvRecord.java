@@ -1,15 +1,20 @@
 package com.chrisnkl.ebr.batch.domain;
 
-public record BookCsvRecord(
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-        String isbn,
-        String title,
-        String author,
-        String category,
-        String publisher,
-        Short publicationYear,
-        String description
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class BookCsvRecord {
 
+    private String isbn;
+    private String title;
+    private String author;
+    private String category;
+    private String publisher;
+    private Short publicationYear;
+    private String description;
 
-) {
 }
