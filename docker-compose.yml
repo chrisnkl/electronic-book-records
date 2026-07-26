@@ -16,5 +16,34 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  ebr-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: ebr-app
+
+    ports:
+      - "8080:8080"
+
+    depends_on:
+      - postgres
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ebr
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    ports:
+      - "8081/8080"
+      - "50000:50000"
+
+    volumes:
+      - "jenkins_home:/var/jenkins_home"
+
 volumes:
   postgres_data:
+  jenkins_home:

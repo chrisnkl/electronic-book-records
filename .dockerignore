@@ -1,0 +1,7 @@
+.git
+.idea
+target/*
+!target/*.jar
+src
+README.md
+*.log
