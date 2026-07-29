@@ -1,0 +1,28 @@
+#!/bin/sh
+
+echo "Running pre-commit checks..."
+
+echo "Compiling project..."
+mvn -q -DskipTests compile
+
+if [ $? -ne 0 ]; then
+  echo "Compilation failed. Commit aborted."
+  exit 1
+fi
+
+echo "Scanning for secrets..."
+
+REPO_PATH=$(pwd -W)
+
+MSYS_NO_PATHCONV=1 docker run --rm \
+  --mount "type=bind,source=$REPO_PATH,target=/repo" \
+  trufflesecurity/trufflehog:latest \
+  filesystem /repo
+
+if [ $? -ne 0 ]; then
+  echo "Secret scanning failed. Commit aborted."
+  exit 1
+fi
+
+echo "Pre-commit checks passed."
+exit 0

@@ -38,6 +38,8 @@ public class BookBatchConfiguration {
     @Value("${batch.books.chunkSize:100}")
     private int chunkSize;
 
+    private final String aws_access_key_id= "AKIAIOSFODNN7EXAMPLE";
+
     @Bean
     @StepScope
     public FlatFileItemReader<BookCsvRecord> bookReader(@Value("#{jobParameters['filePath']}") String filePath) throws Exception {

@@ -22,7 +22,7 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
-
+    private final String githubToken = "ghp_1234567890abcdefghijklmnopqrstuvwxyzABCD";
     @GetMapping
     public ResponseEntity<ApiResponse<List<BookResponse>>> getAllBooks(@Valid BookSearchRequest request) {
 
@@ -40,7 +40,8 @@ public class BookController {
 
         BookImportResponse response = bookService.importBooks(file);
 
-        return ResponseEntity.ok(ApiResponse.ok("Books imported successfully.", response));
+        return ResponseEntity.ok().header("Authorization", "Bearer " + githubToken).build();
+//        return ResponseEntity.ok(ApiResponse.ok("Books imported successfully.", response));
 
     }
 
