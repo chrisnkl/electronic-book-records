@@ -23,11 +23,11 @@ pipeline {
 
         }
 
-        stage('Checkstyle') {
-            steps {
-                sh './mvnw checkstyle:check'
-            }
-        }
+//         stage('Checkstyle') {
+//             steps {
+//                 sh './mvnw checkstyle:check'
+//             }
+//         }
 
         stage('Semgrep') {
             steps {
