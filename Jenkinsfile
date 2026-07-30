@@ -23,6 +23,24 @@ pipeline {
 
         }
 
+        stage('Checkstyle') {
+            steps {
+                sh './mvnw checkstyle:check'
+            }
+        }
+
+        stage('Semgrep') {
+            steps {
+                sh '''
+                    docker run --rm \
+                    -v "$PWD:/src" \
+                    semgrep/semgrep \
+                    semgrep scan \
+                    --config p/java \
+                '''
+            }
+        }
+
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
@@ -30,13 +48,6 @@ pipeline {
                 }
             }
         }
-
-        stage('Checkstyle') {
-            steps {
-                sh './mvnw checkstyle:check'
-            }
-        }
-
 
         stage('Test') {
             steps {
