@@ -31,7 +31,11 @@ pipeline {
 
         stage('Semgrep') {
             steps {
-                sh 'semgrep scan --config p/java'
+                sh '''
+                    export PATH="$HOME/.local/bin:$PATH"
+                    semgrep --version
+                    semgrep scan --config p/java .
+                '''
             }
         }
 
