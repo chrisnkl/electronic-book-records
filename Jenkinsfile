@@ -31,13 +31,7 @@ pipeline {
 
         stage('Semgrep') {
             steps {
-                sh '''
-                    docker run --rm \
-                    -v "$PWD:/src" \
-                    semgrep/semgrep \
-                    semgrep scan \
-                    --config p/java \
-                '''
+                sh 'semgrep scan --config p/java'
             }
         }
 
