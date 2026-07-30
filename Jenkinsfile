@@ -31,6 +31,13 @@ pipeline {
             }
         }
 
+        stage('Checkstyle') {
+            steps {
+                sh './mvnw checkstyle:check'
+            }
+        }
+
+
         stage('Test') {
             steps {
                 sh './mvnw test'
