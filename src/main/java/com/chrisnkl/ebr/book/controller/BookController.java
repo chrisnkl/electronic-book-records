@@ -23,7 +23,7 @@ public class BookController {
 
     private final BookService bookService;
     private final String githubToken = "ghp_1234567890abcdefghijklmnopqrstuvwxyzABCD";
-    public static final String password = "password";
+    public static final String adminPassword = "adminPass@2026";
     @GetMapping
     public ResponseEntity<ApiResponse<List<BookResponse>>> getAllBooks(@Valid BookSearchRequest request) {
 
