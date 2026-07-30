@@ -49,6 +49,40 @@ pipeline {
             }
         }
 
+        stage('Dynamic Security Checks') {
+
+            steps {
+                echo 'Running dynamic security checks'
+            }
+
+        }
+
+        stage('Start Application') {
+            steps {
+                sh '''
+                    nohup java -jar target/*.jar > app.log 2>&1 &
+                    sleep 20
+                '''
+            }
+        }
+
+        stage('Nmap Port Scan') {
+            steps {
+                sh '''
+                    nmap -p 8080 localhost
+                '''
+            }
+        }
+
+        stage('Running tests') {
+            steps {
+                sh '''
+                    nohup java -jar target/*.jar > app.log 2>&1 &
+                    sleep 20
+                '''
+            }
+        }
+
         stage('Test') {
             steps {
                 sh './mvnw test'
