@@ -1,4 +1,5 @@
 http://localhost:8080/api/public/books/import
+http://localhost:8080/api/public/books/first
 http://localhost:8080/api/public/books?title=title
 http://localhost:8080/api/public/books?category=category
 http://localhost:8080/api/public/books?publisher=publisher
