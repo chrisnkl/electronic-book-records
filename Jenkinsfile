@@ -65,22 +65,40 @@ pipeline {
             }
         }
 
-        stage('Semgrep') {
+        stage('Semgrep Debug') {
             steps {
                 sh '''
                     docker run --rm \
-                    -v "/workspace:/src" \
+                    -v /workspace:/src \
                     -w /src \
-                    semgrep/semgrep:latest \
-                    semgrep scan \
-                    --config p/java \
-                    --config p/secrets \
-                    --no-git-ignore \
-                    --error \
-                    .
+                    alpine \
+                    sh -c "
+                        echo 'Inside Semgrep container view'
+                        pwd
+                        ls -la
+                        echo ----
+                        find . -maxdepth 3 -type f
+                    "
                 '''
             }
         }
+
+//         stage('Semgrep') {
+//             steps {
+//                 sh '''
+//                     docker run --rm \
+//                     -v "/workspace:/src" \
+//                     -w /src \
+//                     semgrep/semgrep:latest \
+//                     semgrep scan \
+//                     --config p/java \
+//                     --config p/secrets \
+//                     --no-git-ignore \
+//                     --error \
+//                     .
+//                 '''
+//             }
+//         }
 
 
         stage('SonarQube Analysis') {
