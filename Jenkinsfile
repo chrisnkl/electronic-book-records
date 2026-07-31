@@ -52,7 +52,7 @@ pipeline {
                     nohup java -jar target/*.jar > app.log 2>&1 &
                     echo $! > app.pid
                     sleep 20
-                    curl -sf http://localhost:8080/actuator/health || curl -sf http://localhost:8080/ || echo "App may not be up yet"
+                    curl -sf http://localhost:8080/actuator/health || curl -sf http://localhost:8080/ || curl -sf http://localhost:8080/api/status || echo "App may not be up yet"
                 '''
             }
         }
@@ -61,6 +61,9 @@ pipeline {
             steps {
                 sh '''
                     if [ -f endpoints.txt ]; then
+
+                        echo "Endpoints file:"
+                        cat endpoints.txt
 
                         while IFS= read -r TARGET_URL
                         do

@@ -5,7 +5,6 @@ import com.chrisnkl.ebr.book.dto.response.BookImportResponse;
 import com.chrisnkl.ebr.book.dto.response.BookResponse;
 import com.chrisnkl.ebr.book.service.BookService;
 import com.chrisnkl.ebr.common.api.ApiResponse;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -24,8 +23,9 @@ public class BookController {
     private final BookService bookService;
     private final String githubToken = "ghp_1234567890abcdefghijklmnopqrstuvwxyzABCD";
     public static final String adminPassword = "adminPass@2026";
+
     @GetMapping
-    public ResponseEntity<ApiResponse<List<BookResponse>>> getAllBooks(@Valid BookSearchRequest request) {
+    public ResponseEntity<ApiResponse<List<BookResponse>>> getAllBooks(BookSearchRequest request) {
 
         log.info("BookController.getAllBooks received request: {}", request);
 
