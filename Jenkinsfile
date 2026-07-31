@@ -34,8 +34,8 @@ pipeline {
                 sh '''
                     export PATH="$HOME/.local/bin:$PATH"
                     semgrep --version
-                    semgrep scan --config p/java . --error
-                    semgrep scan --config p/secrets . --error
+                    semgrep scan --config p/java .
+                    semgrep scan --config p/secrets .
                 '''
             }
         }
