@@ -38,6 +38,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.jenkins
+    privileged: true
     container_name: jenkins
     user: root
     restart: unless-stopped
