@@ -52,11 +52,8 @@ pipeline {
                     --config p/java \
                     --config p/secrets \
                     --no-git-ignore \
-                    --json \
-                    --output /src/reports/semgrep.json \
                     /src
-                    ls -la /src/src/main/resources
-
+                    ls -la /src/main/resources
                 '''
             }
         }
