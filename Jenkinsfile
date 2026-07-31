@@ -61,7 +61,7 @@ pipeline {
             steps {
                 sh '''
                     docker run --rm \
-                    -v "${WORKSPACE}:/src" \
+                    -v /workspace:/src \
                     semgrep/semgrep \
                     sh -c "
                         ls -la /src
