@@ -48,10 +48,12 @@ pipeline {
                     docker run --rm \
                     -v "${WORKSPACE}:/src" \
                     semgrep/semgrep \
-                    sh -c "
-                        ls -la /src
-                        find /src -maxdepth 5 -type f
-                    "
+                    semgrep scan \
+                    --config p/java \
+                    --config p/secrets \
+                    --no-git-ignore \
+                    /src
+                    ls -la /src/main/resources
                 '''
             }
         }
