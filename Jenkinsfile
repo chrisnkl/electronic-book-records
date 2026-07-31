@@ -43,12 +43,15 @@ pipeline {
 
         stage('Semgrep') {
             steps {
-                docker run --rm \
+                sh '''
+                    docker run --rm \
                     -v "$PWD:/src" \
                     semgrep/semgrep \
                     semgrep scan \
-                    --config auto \
+                    --config p/java . --error \
+                    --config p/secrets . --error\
                     /src
+                '''
             }
         }
 
