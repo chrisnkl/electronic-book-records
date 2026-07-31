@@ -58,14 +58,11 @@ pipeline {
 //         }
 
         stage('Semgrep') {
-
             steps {
-
                 sh '''
                     docker run --rm \
-                    -v "${WORKSPACE}:/src" \
+                    -v "$(pwd):/src" \
                     -w /src \
-                    --entrypoint semgrep \
                     semgrep/semgrep \
                     scan \
                     --config p/java \
@@ -74,7 +71,6 @@ pipeline {
                     --error \
                     .
                 '''
-
             }
         }
 
