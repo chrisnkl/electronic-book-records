@@ -57,18 +57,21 @@ pipeline {
 //             }
 //         }
 
-        stage('Semgrep Debug') {
+        stage('Semgrep') {
+
             steps {
+
                 sh '''
                     docker run --rm \
-                    -v /workspace:/src \
+                    -v "$(pwd):/src" \
                     semgrep/semgrep \
-                    sh -c "
-                        ls -la /src
-                        echo ----
-                        find /src -maxdepth 4 -type f
-                    "
+                    semgrep scan \
+                    --config p/java \
+                    --config p/secrets \
+                    --no-git-ignore \
+                    /src
                 '''
+
             }
         }
 
