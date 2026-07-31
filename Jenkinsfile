@@ -101,13 +101,13 @@ pipeline {
                 sh './mvnw test'
             }
         }
+    }
 
         post {
-                always {
-                    echo 'Archive Reports'
-                    archiveArtifacts artifacts: 'reports/**/*', allowEmptyArchive: true
-                }
+            always {
+                echo 'Archive Reports'
+                archiveArtifacts artifacts: 'reports/**/*', allowEmptyArchive: true
             }
+        }
 
-    }
 }
