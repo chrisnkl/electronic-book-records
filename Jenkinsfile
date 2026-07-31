@@ -18,7 +18,8 @@ pipeline {
         stage('Static Security Checks') {
 
             steps {
-                echo 'Running static security checks'
+                echo 'Running static security checks.. Creating folder reports..'
+                sh 'mkdir -p reports'
             }
 
         }
