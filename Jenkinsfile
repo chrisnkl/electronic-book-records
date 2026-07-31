@@ -64,6 +64,7 @@ pipeline {
                 sh '''
                     docker run --rm \
                     -v "${WORKSPACE}:/src" \
+                    --entrypoint semgrep \
                     semgrep/semgrep \
                     scan \
                     --config p/java \
