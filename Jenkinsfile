@@ -40,11 +40,19 @@ pipeline {
 //             }
 //         }
 
+        stage('Prepare Reports Dir') {
+            steps {
+                sh 'mkdir -p reports'
+            }
+        }
+
         stage('Start Application') {
             steps {
                 sh '''
                     nohup java -jar target/*.jar > app.log 2>&1 &
+                    echo $! > app.pid
                     sleep 20
+                    curl -sf http://localhost:8080/actuator/health || curl -sf http://localhost:8080/ || echo "App may not be up yet"
                 '''
             }
         }
@@ -54,22 +62,25 @@ pipeline {
                 sh '''
                     if [ -f endpoints.txt ]; then
                         TARGET_URL=$(head -n 1 endpoints.txt)
-                        echo "Found URLs from endpoints.txt: $TARGET_URL"
-                        zap-cli quick-scan --self-contained -l Medium "$TARGET_URL" -r reports/zap-report.html || true
+                        echo "Scanning: $TARGET_URL"
+                        /opt/zap/zap.sh -cmd \
+                            -quickurl "$TARGET_URL" \
+                            -quickout "$WORKSPACE/reports/zap-report.html" \
+                            -quickprogress || true
                     else
-                        echo "endpoints.txt was not found, therefore skipping ZAP scan."
+                        echo "endpoints.txt not found, skipping ZAP scan."
                     fi
                 '''
             }
         }
 
-//         stage('Dynamic Analysis - Nmap Port Scan') {
-//             steps {
-//                 sh '''
-//                     nmap -p 8080 localhost
-//                 '''
-//             }
-//         }
+        stage('Dynamic Analysis - Nmap Port Scan') {
+            steps {
+                sh '''
+                    nmap -p 8080 localhost -oN reports/nmap-report.txt
+                '''
+            }
+        }
 
 //         stage('Test') {
 //             steps {
@@ -80,6 +91,12 @@ pipeline {
 
         post {
             always {
+                sh '''
+                    if [ -f app.pid ]; then
+                        kill $(cat app.pid) || true
+                        rm -f app.pid
+                    fi
+                '''
                 echo 'Archive Reports'
                 archiveArtifacts artifacts: 'reports/**/*', allowEmptyArchive: true
             }
