@@ -63,12 +63,13 @@ pipeline {
 
                 sh '''
                     docker run --rm \
-                    -v "$(pwd):/src" \
+                    -v "${WORKSPACE}:/src" \
                     semgrep/semgrep \
-                    semgrep scan \
+                    scan \
                     --config p/java \
                     --config p/secrets \
                     --no-git-ignore \
+                    --error \
                     /src
                 '''
 
