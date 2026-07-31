@@ -61,15 +61,19 @@ pipeline {
             steps {
                 sh '''
                     if [ -f endpoints.txt ]; then
-                        TARGET_URL=$(head -n 1 endpoints.txt)
-                        echo "Scanning: $TARGET_URL"
-                        /opt/zap/zap.sh -cmd \
+
+                        while IFS= read -r TARGET_URL
+                        do
+                            echo "Scanning: $TARGET_URL"
+                            /opt/zap/zap.sh \
+                            -cmd \
                             -port 8090 \
                             -quickurl "$TARGET_URL" \
-                            -quickout "$WORKSPACE/reports/zap-report.html" \
+                            -quickout "reports/zap-$(echo $TARGET_URL | md5sum | cut -d' ' -f1).html" \
                             -quickprogress || true
+                        done < endpoints.txt
                     else
-                        echo "endpoints.txt not found, skipping ZAP scan."
+                        echo "endpoints.txt not found"
                     fi
                 '''
             }
