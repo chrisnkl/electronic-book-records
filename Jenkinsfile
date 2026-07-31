@@ -64,6 +64,7 @@ pipeline {
                 sh '''
                     docker run --rm \
                     -v "${WORKSPACE}:/src" \
+                    -w /src \
                     --entrypoint semgrep \
                     semgrep/semgrep \
                     scan \
@@ -71,7 +72,7 @@ pipeline {
                     --config p/secrets \
                     --no-git-ignore \
                     --error \
-                    /src
+                    .
                 '''
 
             }
