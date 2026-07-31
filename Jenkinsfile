@@ -69,7 +69,7 @@ pipeline {
                             -cmd \
                             -port 8090 \
                             -quickurl "$TARGET_URL" \
-                            -quickout "reports/zap-$(echo $TARGET_URL | md5sum | cut -d' ' -f1).html" \
+                            -quickout "$WORKSPACE/reports/zap-$(echo $TARGET_URL | md5sum | cut -d' ' -f1).html" \
                             -quickprogress || true
                         done < endpoints.txt
                     else
