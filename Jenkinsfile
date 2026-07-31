@@ -42,20 +42,19 @@ pipeline {
 //             }
 //         }
 
-stage('Semgrep') {
-    steps {
-        sh '''
-            docker run --rm \
-            -v "$PWD:/src" \
-            semgrep/semgrep \
-            sh -c "
-                ls -la /src
-                echo '---'
-                find /src -maxdepth 5 -type f
-            "
-        '''
-    }
-}
+        stage('Semgrep') {
+            steps {
+                sh '''
+                    docker run --rm \
+                    -v "${WORKSPACE}:/src" \
+                    semgrep/semgrep \
+                    sh -c "
+                        ls -la /src
+                        find /src -maxdepth 5 -type f
+                    "
+                '''
+            }
+        }
 
 
         stage('SonarQube Analysis') {
