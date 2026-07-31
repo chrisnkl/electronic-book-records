@@ -35,7 +35,9 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
 
   jenkins:
-    image: jenkins/jenkins:lts
+    build:
+      context: .
+      dockerfile: Dockerfile.jenkins
     container_name: jenkins
     restart: unless-stopped
     ports:
@@ -44,6 +46,7 @@ services:
 
     volumes:
       - "jenkins_home:/var/jenkins_home"
+      - "/var/run/docker.sock:/var/run/docker.sock"
 
   sonarqube-db:
     image: postgres:17

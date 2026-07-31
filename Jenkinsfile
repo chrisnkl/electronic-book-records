@@ -41,6 +41,18 @@ pipeline {
 //             }
 //         }
 
+        stage('Semgrep') {
+            steps {
+                docker run --rm \
+                    -v "$PWD:/src" \
+                    semgrep/semgrep \
+                    semgrep scan \
+                    --config auto \
+                    /src
+            }
+        }
+
+
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
@@ -60,7 +72,8 @@ pipeline {
         stage('Start Application') {
             steps {
                 sh '''
-                    nohup java -jar target/*.jar > app.log 2>&1 &
+                    nohup java -jar target/ebr-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
+                    echo $! > app.pid
                     sleep 20
                 '''
             }
@@ -70,6 +83,14 @@ pipeline {
             steps {
                 sh '''
                     nmap -p 8080 localhost
+                '''
+            }
+        }
+
+        stage('Stop Application') {
+            steps {
+                sh '''
+                    kill $(cat app.pid) || true
                 '''
             }
         }
