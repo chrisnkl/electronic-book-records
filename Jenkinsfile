@@ -15,12 +15,12 @@ pipeline {
             }
         }
 
-//         stage('Checkstyle') {
-//             steps {
-//                 sh './mvnw checkstyle:check'
-//             }
-//         }
-//
+        stage('Checkstyle') {
+            steps {
+                sh './mvnw checkstyle:check'
+            }
+        }
+
         stage('Static Analysis - Semgrep') {
             steps {
                 sh '''
@@ -31,14 +31,14 @@ pipeline {
                 '''
             }
         }
-//
-//         stage('Static Analysis - SonarQube Analysis') {
-//             steps {
-//                 withSonarQubeEnv('sonarqube') {
-//                     sh './mvnw sonar:sonar'
-//                 }
-//             }
-//         }
+
+        stage('Static Analysis - SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    sh './mvnw sonar:sonar'
+                }
+            }
+        }
 
         stage('Prepare Reports Dir') {
             steps {
