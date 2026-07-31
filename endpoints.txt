@@ -1,6 +1,6 @@
-http://localhost:8080/api/public/books/import
-http://localhost:8080/api/public/books/first
-http://localhost:8080/api/public/books?title=title
-http://localhost:8080/api/public/books?category=category
-http://localhost:8080/api/public/books?publisher=publisher
-http://localhost:8080/api/status
+http://ebr-app:8080/api/public/books/import
+http://ebr-app:8080/api/public/books/first
+http://ebr-app:8080/api/public/books?title=title
+http://ebr-app:8080/api/public/books?category=category
+http://ebr-app:8080/api/public/books?publisher=publisher
+http://ebr-app:8080/api/status
