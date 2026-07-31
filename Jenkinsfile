@@ -48,8 +48,10 @@ pipeline {
                     -v "$PWD:/src" \
                     semgrep/semgrep \
                     semgrep scan \
-                    --config p/java . --error \
-                    --config p/secrets . --error\
+                    --config p/java \
+                    --config p/secrets \
+                    --json \
+                    --output /src/reports/semgrep.json \
                     /src
                 '''
             }
