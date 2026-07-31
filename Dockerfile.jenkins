@@ -10,9 +10,14 @@ RUN apt-get update && \
     nmap \
     sqlmap \
     curl \
-    git && \
+    wget \
+    default-jre && \
     rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install semgrep zapcli --break-system-packages
+
+RUN wget https://github.com/zaproxy/zaproxy/releases/download/v2.15.0/ZAP_2_15_0_Linux.tar.gz \
+    && tar -xzf ZAP_2_15_0_Linux.tar.gz -C /opt \
+    && rm ZAP_2_15_0_Linux.tar.gz
 
 USER jenkins
