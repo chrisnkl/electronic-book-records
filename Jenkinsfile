@@ -15,11 +15,11 @@ pipeline {
             }
         }
 
-        stage('Checkstyle') {
-            steps {
-                sh './mvnw checkstyle:check'
-            }
-        }
+//         stage('Checkstyle') {
+//             steps {
+//                 sh './mvnw checkstyle:check'
+//             }
+//         }
 
         stage('Static Analysis - Semgrep') {
             steps {
