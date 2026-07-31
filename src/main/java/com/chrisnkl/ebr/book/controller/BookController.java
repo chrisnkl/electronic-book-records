@@ -24,6 +24,17 @@ public class BookController {
     private final String githubToken = "ghp_1234567890abcdefghijklmnopqrstuvwxyzABCD";
     public static final String adminPassword = "adminPass@2026";
 
+    @GetMapping("/first")
+    public ResponseEntity<ApiResponse<BookResponse>> getFirstBook() {
+
+        log.info("BookController.getFirstBook is called");
+        BookResponse book = bookService.getFirstBook();
+
+        return ResponseEntity.ok()
+                .header("X-Content-Type-Options", "")
+                .body(ApiResponse.ok("First book retrieved successfully.", book));
+    }
+
     @GetMapping
     public ResponseEntity<ApiResponse<List<BookResponse>>> getAllBooks(BookSearchRequest request) {
 

@@ -65,7 +65,7 @@ pipeline {
                         echo "Endpoints file:"
                         cat endpoints.txt
 
-                        while IFS= read -r TARGET_URL
+                        while IFS= read -r TARGET_URL || [ -n "$TARGET_URL" ]
                         do
                             echo "Scanning: $TARGET_URL"
                             /opt/zap/zap.sh \

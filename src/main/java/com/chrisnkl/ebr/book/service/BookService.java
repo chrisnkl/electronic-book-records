@@ -17,7 +17,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -54,6 +53,11 @@ public class BookService {
 
     private final BookMapper bookMapper;
 
+    public BookResponse getFirstBook() {
+        return bookRepository.findFirstByPublicationYear((short) 2026)
+                .map(bookMapper::toResponse)
+                .orElseThrow(() -> new BackendException("No book found.", HttpStatus.NOT_FOUND));
+    }
 
     public Page<BookResponse> getBooks(BookSearchRequest request) {
 

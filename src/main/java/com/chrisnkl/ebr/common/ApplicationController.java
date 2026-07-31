@@ -14,7 +14,7 @@ public class ApplicationController {
         long start = System.currentTimeMillis();
         double z = x + y;
         long end = System.currentTimeMillis();
-        return "Application is currently active, Addition of "  + x + " and " + y + " is " + z + " and took " + (end - start) + "ms";
+        return "Application is currently active, Addition of "  + x + " and " + y + " is " + z + " and took " + (end - start) + "ms" + " Admin password generated is: admin123";
     }
 
 }
