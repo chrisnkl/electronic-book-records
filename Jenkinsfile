@@ -57,25 +57,10 @@ pipeline {
 //             }
 //         }
 
-        stage('Debug Docker Mount') {
+        stage('Debug') {
             steps {
                 sh '''
-                    echo "=== Jenkins workspace ==="
-                    pwd
-                    ls -la
-
-                    echo "=== Docker container view ==="
-                    docker run --rm \
-                    -v "$(pwd):/src" \
-                    -w /src \
-                    alpine \
-                    sh -c "
-                        pwd
-                        echo ----
-                        ls -la
-                        echo ----
-                        find . -maxdepth 3 -type f | head -100
-                    "
+                    ls -la /workspace
                 '''
             }
         }
@@ -84,7 +69,7 @@ pipeline {
             steps {
                 sh '''
                     docker run --rm \
-                    -v "$(pwd):/src" \
+                    -v "/workspace:/src" \
                     -w /src \
                     semgrep/semgrep:latest \
                     semgrep scan \
