@@ -57,6 +57,29 @@ pipeline {
 //             }
 //         }
 
+        stage('Debug Docker Mount') {
+            steps {
+                sh '''
+                    echo "=== Jenkins workspace ==="
+                    pwd
+                    ls -la
+
+                    echo "=== Docker container view ==="
+                    docker run --rm \
+                    -v "$(pwd):/src" \
+                    -w /src \
+                    alpine \
+                    sh -c "
+                        pwd
+                        echo ----
+                        ls -la
+                        echo ----
+                        find . -maxdepth 3 -type f | head -100
+                    "
+                '''
+            }
+        }
+
         stage('Semgrep') {
             steps {
                 sh '''
