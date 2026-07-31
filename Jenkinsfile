@@ -36,9 +36,6 @@ pipeline {
                     semgrep --version
                     semgrep scan --config p/java . --error
                     semgrep scan --config p/secrets . --error
-                    --json
-                    --output /src/reports/semgrep-report.json
-                    --error
                 '''
             }
         }
