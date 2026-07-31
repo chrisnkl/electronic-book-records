@@ -42,17 +42,32 @@ pipeline {
 //             }
 //         }
 
-        stage('Semgrep') {
+//         stage('Semgrep') {
+//             steps {
+//                 sh '''
+//                     docker run --rm \
+//                     -v "${WORKSPACE}:/src" \
+//                     semgrep/semgrep \
+//                     semgrep scan \
+//                     --config p/java \
+//                     --config p/secrets \
+//                     --no-git-ignore \
+//                     /src
+//                 '''
+//             }
+//         }
+
+        stage('Semgrep Debug') {
             steps {
                 sh '''
                     docker run --rm \
                     -v "${WORKSPACE}:/src" \
                     semgrep/semgrep \
-                    semgrep scan \
-                    --config p/java \
-                    --config p/secrets \
-                    --no-git-ignore \
-                    /src
+                    sh -c "
+                        ls -la /src
+                        echo ----
+                        find /src -maxdepth 4 -type f
+                    "
                 '''
             }
         }
