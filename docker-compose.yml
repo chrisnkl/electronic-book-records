@@ -35,7 +35,10 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
 
   jenkins:
-    image: jenkins/jenkins:lts
+    build:
+        context: .
+        dockerfile: Dockerfile.jenkins
+    user: root
     container_name: jenkins
     restart: unless-stopped
     ports:

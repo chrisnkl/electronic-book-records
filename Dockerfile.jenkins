@@ -1,0 +1,18 @@
+FROM jenkins/jenkins:lts
+
+USER root
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    docker.io \
+    python3 \
+    python3-pip \
+    nmap \
+    sqlmap \
+    curl \
+    git && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install semgrep --break-system-packages
+
+USER jenkins
