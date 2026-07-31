@@ -17,9 +17,10 @@ RUN apt-get update && \
 
 RUN pip3 install semgrep --break-system-packages
 
-RUN wget https://github.com/zaproxy/zaproxy/releases/download/v2.15.0/ZAP_2_15_0_Linux.tar.gz \
-    && tar -xzf ZAP_2_15_0_Linux.tar.gz -C /opt \
-    && rm ZAP_2_15_0_Linux.tar.gz \
+RUN wget -O zap.tar.gz https://github.com/zaproxy/zaproxy/releases/download/v2.17.0/ZAP_2.17.0_Linux.tar.gz \
+    && mkdir -p /opt/zap \
+    && tar -xzf zap.tar.gz -C /opt/zap --strip-components=1 \
+    && rm zap.tar.gz \
     && chmod +x /opt/zap/zap.sh
 
 ENV PATH="/opt/zap:$PATH"

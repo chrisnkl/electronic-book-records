@@ -64,6 +64,7 @@ pipeline {
                         TARGET_URL=$(head -n 1 endpoints.txt)
                         echo "Scanning: $TARGET_URL"
                         /opt/zap/zap.sh -cmd \
+                            - port 8090 \
                             -quickurl "$TARGET_URL" \
                             -quickout "$WORKSPACE/reports/zap-report.html" \
                             -quickprogress || true
