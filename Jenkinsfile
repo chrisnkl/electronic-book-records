@@ -46,14 +46,13 @@ pipeline {
             steps {
                 sh '''
                     docker run --rm \
-                    -v "${WORKSPACE}" \
+                    -v "${WORKSPACE}:/src" \
                     semgrep/semgrep \
                     semgrep scan \
                     --config p/java \
                     --config p/secrets \
                     --no-git-ignore \
                     /src
-                    ls -la /src/main/resources
                 '''
             }
         }
