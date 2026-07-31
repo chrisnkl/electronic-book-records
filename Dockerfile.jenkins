@@ -13,6 +13,6 @@ RUN apt-get update && \
     git && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install semgrep --break-system-packages
+RUN pip3 install semgrep zapcli --break-system-packages
 
 USER jenkins

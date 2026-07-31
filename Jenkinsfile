@@ -65,6 +65,20 @@ pipeline {
             }
         }
 
+        stage('Dynamic Security Checks - OWASP ZAP') {
+            steps {
+                sh '''
+                    if [ -f endpoints.txt ]; then
+                        TARGET_URL=$(head -n 1 endpoints.txt)
+                        echo "Found URLs from endpoints.txt: $TARGET_URL"
+                        zap-cli quick-scan --self-contained -l Medium "$TARGET_URL" -r reports/zap-report.html || true
+                    else
+                        echo "endpoints.txt was not found, therefore skipping ZAP scan."
+                    fi
+                '''
+            }
+        }
+
         stage('Nmap Port Scan') {
             steps {
                 sh '''
@@ -87,5 +101,13 @@ pipeline {
                 sh './mvnw test'
             }
         }
+
+        post {
+                always {
+                    echo 'Archive Reports'
+                    archiveArtifacts artifacts: 'reports/**/*', allowEmptyArchive: true
+                }
+            }
+
     }
 }
