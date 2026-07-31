@@ -46,7 +46,7 @@ pipeline {
             steps {
                 sh '''
                     docker run --rm \
-                    -v "${WORKSPACE}:/src" \
+                    -v "${WORKSPACE}" \
                     semgrep/semgrep \
                     semgrep scan \
                     --config p/java \
