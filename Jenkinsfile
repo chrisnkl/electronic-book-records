@@ -85,7 +85,7 @@ pipeline {
         stage('Dynamic Analysis - Nmap Port Scan') {
             steps {
                 sh '''
-                    nmap -p 8080 localhost -oN reports/nmap-report.txt
+                    nmap -sV -p 8080 localhost -oN reports/nmap-report.txt
                 '''
             }
         }
