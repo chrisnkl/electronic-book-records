@@ -20,4 +20,6 @@ RUN wget https://github.com/zaproxy/zaproxy/releases/download/v2.15.0/ZAP_2_15_0
     && tar -xzf ZAP_2_15_0_Linux.tar.gz -C /opt \
     && rm ZAP_2_15_0_Linux.tar.gz
 
+ENV PATH="/opt/zap:$PATH"
+
 USER jenkins

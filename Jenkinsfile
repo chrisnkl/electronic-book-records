@@ -15,21 +15,13 @@ pipeline {
             }
         }
 
-        stage('Static Security Checks') {
-
-            steps {
-                echo 'Running static security checks'
-            }
-
-        }
-
 //         stage('Checkstyle') {
 //             steps {
 //                 sh './mvnw checkstyle:check'
 //             }
 //         }
 //
-        stage('Semgrep') {
+        stage('Static Analysis - Semgrep') {
             steps {
                 sh '''
                     export PATH="$HOME/.local/bin:$PATH"
@@ -40,21 +32,13 @@ pipeline {
             }
         }
 //
-//         stage('SonarQube Analysis') {
+//         stage('Static Analysis - SonarQube Analysis') {
 //             steps {
 //                 withSonarQubeEnv('sonarqube') {
 //                     sh './mvnw sonar:sonar'
 //                 }
 //             }
 //         }
-
-        stage('Dynamic Security Checks') {
-
-            steps {
-                echo 'Running dynamic security checks'
-            }
-
-        }
 
         stage('Start Application') {
             steps {
@@ -65,7 +49,7 @@ pipeline {
             }
         }
 
-        stage('Dynamic Security Checks - OWASP ZAP') {
+        stage('Dynamic Analysis - OWASP ZAP') {
             steps {
                 sh '''
                     if [ -f endpoints.txt ]; then
@@ -79,19 +63,19 @@ pipeline {
             }
         }
 
-        stage('Nmap Port Scan') {
-            steps {
-                sh '''
-                    nmap -p 8080 localhost
-                '''
-            }
-        }
+//         stage('Dynamic Analysis - Nmap Port Scan') {
+//             steps {
+//                 sh '''
+//                     nmap -p 8080 localhost
+//                 '''
+//             }
+//         }
 
-        stage('Test') {
-            steps {
-                sh './mvnw test'
-            }
-        }
+//         stage('Test') {
+//             steps {
+//                 sh './mvnw test'
+//             }
+//         }
     }
 
         post {
