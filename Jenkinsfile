@@ -63,8 +63,8 @@ pipeline {
                     docker run --rm \
                     -v "$(pwd):/src" \
                     -w /src \
-                    semgrep/semgrep \
-                    scan \
+                    semgrep/semgrep:latest \
+                    semgrep scan \
                     --config p/java \
                     --config p/secrets \
                     --no-git-ignore \
